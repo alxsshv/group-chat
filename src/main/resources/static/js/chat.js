@@ -1,19 +1,25 @@
 $(function(){
     let initApplication = function(){
-
+        $('.messages-and-users').css({display: 'flex'});
+        $('.controls').css({display: 'flex'});
+        // todo: init events
     };
 
     let registerUser = function(name){
         $.post("/auth", {name: name}, function(response){
-        })
+            if (response.result){
+                initApplication();
+            }
+        });
     };
 
-    $('.send-button').on('click', function(){
-        $.get('/init', {}, function(response){
-            if(response == false){
-            let name = prompt('Введите Ваше имя:');
-            } else {
-            }
-        })
-    });
+
+    $.get('/init', {}, function(response){
+        if(!response.result){
+        let name = prompt('Введите Ваше имя:');
+        registerUser(name);
+        return;
+        }
+        initApplication();
+        });
 });
