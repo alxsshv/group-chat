@@ -2,7 +2,16 @@ $(function(){
     let initApplication = function(){
         $('.messages-and-users').css({display: 'flex'});
         $('.controls').css({display: 'flex'});
-        // todo: init events
+        $('.send-button').on('click', function(){
+            let message = $('.new-message').val();
+            $post('/message', {message: message}, function(response){
+                if(response.result){
+                $('.new-message').val('');
+                } else {
+                    alert('Ошибка отправления сообщения. Повторите попытку позже');
+                }
+            })
+        });
     };
 
     let registerUser = function(name){

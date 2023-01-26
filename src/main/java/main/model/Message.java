@@ -7,10 +7,10 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 @Entity
+@Table(name = "messages")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private int id;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)

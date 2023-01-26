@@ -1,27 +1,31 @@
-package main;
+package main.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import main.service.IMessageService;
+import main.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
 public class ChatController {
+    @Autowired
+    @Qualifier("userService")
+    private IUserService userService;
+    @Autowired
+    @Qualifier("messageService")
+    private IMessageService messageService;
+
     @GetMapping("/init")
     public HashMap<String, Boolean> init(){
-        HashMap<String, Boolean> response = new HashMap<>();
-        response.put("result", false);
-        return response;
+        return userService.isAuthorized();
     }
 
     @PostMapping("/auth")
     public HashMap<String, Boolean> auth(@RequestParam String name){
-        HashMap<String, Boolean> response = new HashMap<>();
-        response.put("result", true);
-        return response;
+        return userService.auth(name);
     }
     
     @PostMapping("/message")
@@ -38,4 +42,6 @@ public class ChatController {
     public HashMap<Integer, String> getUsersList(){
         return null;
     }
+
+
 }
