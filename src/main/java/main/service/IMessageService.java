@@ -1,10 +1,11 @@
 package main.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IMessageService {
 
-    Boolean sendMessage(String message);
+    HashMap<String, Boolean> sendMessage(String message);
 
     List<String> getMessagesList();
 }

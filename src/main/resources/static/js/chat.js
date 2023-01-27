@@ -1,10 +1,36 @@
 $(function(){
+    let getMessageElement = function(message){
+        let item = $('<div class = "messsage-item"></div>');
+        let header = $('<div class="message-header"></div>')
+        header.append($('<div class="datetime">' + message.datetime + '</div>'));
+        header.append($('<div class="username">'+ message.username + '</div>'));
+        let textElement = $('<div class="message-text"></div>');
+        textElement.text(message.text);
+        item.append(header, textElement);
+        return item;
+    }
+
+    let updateMessages = function(){
+        $('.message-list').html('');
+        $.get('/message',{}, function(response){
+            if (response.length == 0) {
+            return;
+            }
+            $('.message-list').html('<i>Сообщений нет</i>');
+            for(i in response){
+                let element = getMessageElement(response[i]);
+                $('.message-list').append(element);
+            }
+        });
+    }
+
     let initApplication = function(){
         $('.messages-and-users').css({display: 'flex'});
         $('.controls').css({display: 'flex'});
+
         $('.send-button').on('click', function(){
             let message = $('.new-message').val();
-            $post('/message', {message: message}, function(response){
+            $.post('/message', {message: message}, function(response){
                 if(response.result){
                 $('.new-message').val('');
                 } else {
@@ -12,6 +38,9 @@ $(function(){
                 }
             })
         });
+
+        setInterval(updateMessages, 1000)
+
     };
 
     let registerUser = function(name){

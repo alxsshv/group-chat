@@ -29,8 +29,8 @@ public class ChatController {
     }
     
     @PostMapping("/message")
-    public Boolean sendMessage(@RequestParam String message){
-        return true;
+    public HashMap<String, Boolean> sendMessage(@RequestParam String message){
+        return messageService.sendMessage(message);
     }
 
     @GetMapping("/message")
