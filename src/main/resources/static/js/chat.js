@@ -1,7 +1,7 @@
 $(function(){
     let getMessageElement = function(message){
-        let item = $('<div class = "messsage-item"></div>');
-        let header = $('<div class="message-header"></div>')
+        let item = $('<div class = "message-item"></div>');
+        let header = $('<div class="message-header"></div>');
         header.append($('<div class="datetime">' + message.datetime + '</div>'));
         header.append($('<div class="username">'+ message.username + '</div>'));
         let textElement = $('<div class="message-text"></div>');
@@ -11,12 +11,12 @@ $(function(){
     }
 
     let updateMessages = function(){
-        $('.message-list').html('');
+        $('.message-list').html('<i>Сообщений нет</i>');
         $.get('/message',{}, function(response){
             if (response.length == 0) {
             return;
             }
-            $('.message-list').html('<i>Сообщений нет</i>');
+            $('.message-list').html('');
             for(i in response){
                 let element = getMessageElement(response[i]);
                 $('.message-list').append(element);
@@ -39,7 +39,7 @@ $(function(){
             })
         });
 
-        setInterval(updateMessages, 1000)
+        setInterval(updateMessages, 10000)
 
     };
 

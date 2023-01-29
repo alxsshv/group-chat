@@ -1,5 +1,6 @@
 package main.controller;
 
+import main.dto.DtoMessage;
 import main.service.IMessageService;
 import main.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class ChatController {
     }
 
     @GetMapping("/message")
-    public List<String> getMessagesList(){
-        return null;
+    public List<DtoMessage> getMessagesList(){
+        return messageService.getMessagesList();
     }
 
     @GetMapping("/user")

@@ -1,18 +1,21 @@
 package main.service.impl;
 
 import main.dto.DtoMessage;
+import main.dto.MessageMapper;
 import main.model.Message;
 import main.model.User;
 import main.repository.MessageRepository;
 import main.repository.UserRepository;
 import main.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @Service
@@ -21,6 +24,8 @@ public class MessageService implements IMessageService {
     private MessageRepository messageRepository;
     @Autowired
     private UserRepository userRepository;
+    private MessageMapper mapper;
+
 
     @Override
     public HashMap<String, Boolean> sendMessage(String message) {
@@ -40,8 +45,12 @@ public class MessageService implements IMessageService {
         return response;
     }
     @Override
-    public List<String> getMessagesList() {
+    public List<DtoMessage> getMessagesList() {
+        return messageRepository
+               .findAll(Sort.by(Sort.Direction.ASC, "dateTime"))
+               .stream()
+               .map(MessageMapper::map)
+               .collect(Collectors.toList());
 
-        return null;
     }
 }
