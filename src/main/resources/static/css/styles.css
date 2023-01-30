@@ -48,3 +48,8 @@
     font-weight: bold;
     color: red;
 }
+
+.user-item {
+    color: red;
+    margin-bottom: 10px;
+}

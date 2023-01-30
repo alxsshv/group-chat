@@ -24,6 +24,22 @@ $(function(){
         });
     }
 
+
+    let updateUsers = function(){
+        $('.users-list').html('<i>Пользователей нет</i>');
+        $.get('/user', {}, function(response){
+            if (response.length == 0) {
+            return;
+            }
+            $('.users-list').html('');
+            for (i in response){
+                $('.users-list').append($('<div class="user-item">' + response[i] + '</div>'));
+            }
+        });
+    }
+
+
+
     let initApplication = function(){
         $('.messages-and-users').css({display: 'flex'});
         $('.controls').css({display: 'flex'});
@@ -39,8 +55,8 @@ $(function(){
             })
         });
 
-        setInterval(updateMessages, 10000)
-
+        setInterval(updateMessages, 10000);
+        setInterval(updateUsers, 10000)
     };
 
     let registerUser = function(name){

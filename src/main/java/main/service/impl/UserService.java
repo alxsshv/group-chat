@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -39,4 +41,14 @@ public class UserService implements IUserService {
         response.put("result", userOptional.isPresent());
         return response;
     }
+
+    @Override
+    public List<String> getActiveUsersNameList() {
+        List<String> userNames = new ArrayList<>();
+        for (User user : userRepository.findAll()){
+            userNames.add(user.getName());
+        }
+        return userNames;
+    }
+
 }

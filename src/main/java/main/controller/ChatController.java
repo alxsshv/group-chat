@@ -40,8 +40,8 @@ public class ChatController {
     }
 
     @GetMapping("/user")
-    public HashMap<Integer, String> getUsersList(){
-        return null;
+    public List<String> getUsersList(){
+        return userService.getActiveUsersNameList();
     }
 
 
